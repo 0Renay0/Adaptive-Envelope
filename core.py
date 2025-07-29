@@ -93,4 +93,4 @@ def compute_envelope_and_regression(t, signal, name, window_size=10, iterations=
 # === Application Enveloppe aux variables ===
 def apply_to_all_variables(t, X, var_names, window_size=10, iterations=50):
     for i, name in enumerate(var_names):
-        compute_envelope_and_regression(X[:, i], name, window_size, iterations)
+        compute_envelope_and_regression(t, X[:, i], name, window_size, iterations)
