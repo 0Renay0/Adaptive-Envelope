@@ -19,6 +19,3 @@ def flow_two_tanks(x, t, params):
 
     return [(q_in - q12) / A1, (q12 - qout) / A2]
 
-# === Ajout facile d'autres dynamiques ===
-# def flow_custom(x, t, params):
-#     ...
