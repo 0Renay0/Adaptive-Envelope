@@ -3,7 +3,7 @@ import numpy as np
 from scipy.ndimage import uniform_filter1d
 import matplotlib.pyplot as plt
 from pysr import PySRRegressor
-
+import os
 
 # === Simulation ===
 
@@ -21,6 +21,29 @@ def simulate_system(flow_func, x0, t, params):
 
 
 # === Calcul enveloppe et regression ===
+
+
+def save_model(variable_names, upper_expr, lower_expr, folder="models"):
+    """
+    Enregistre les modèles de régression symbolique dans un fichier.
+
+    Args:
+        variable_names (_type_): _description_
+        upper_expr (_type_): _description_
+        lower_expr (_type_): _description_
+        folder (str, optional): _description_. Defaults to "models".
+    """
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    filepath = os.path.join(folder, f"{variable_names}_model.txt")
+
+    with open(filepath, "w") as f:
+        f.write(f"=== Regression Model for {variable_names} ===\n")
+        f.write(f"Upper bound: {upper_expr}\n")
+        f.write(f"Lower bound: {lower_expr}\n")
+
+    print(f"[INFO] Modèles enregistrés dans {filepath}")
 
 
 def compute_envelope_and_regression(t, signal, name, window_size=10, iterations=50):
@@ -58,6 +81,9 @@ def compute_envelope_and_regression(t, signal, name, window_size=10, iterations=
     print(f"\n=== {name} ===")
     print(f"Upper({name}) = {upper_expr}")
     print(f"Lower({name}) = {lower_expr}")
+
+    # Sauvegarde du modèle dans un fichier
+    save_model(name, upper_expr, lower_expr)
 
     # Evaluation
     def eval_expr(expr, x):
